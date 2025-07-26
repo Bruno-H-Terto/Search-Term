@@ -1,0 +1,2 @@
+class UserIp < ApplicationRecord
+end

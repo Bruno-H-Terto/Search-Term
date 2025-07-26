@@ -1,5 +1,20 @@
-<section class="flex justify-center">
+<section class="flex justify-center flex-col ps-3">
   <h1>Serch Term</h1>
 
   <div data-controller="hello"></div>
+
+  <div class="border-2 border-gray-600 mx-3" data-controller="search-input">
+    <input placeholder="Search something..."
+           type="text"
+           data-search-input-target="searchInput"
+           data-action="input->search-input#search"
+    >
+  </div>
+
+  <section>
+    <div>
+      <h2>Last search terms</h2>
+      <ul></ul>
+    </div>
+  </section>
 </section>
