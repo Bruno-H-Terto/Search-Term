@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    container_name: 'app'
+    ports:
+      - 3000:3000
+    depends_on:
+      - database
+    volumes:
+      - .:/app
+    environment:
+      - DB_HOST=database
+      - DB_PASSWORD=postgres
+      - DB_USERNAME=postgres
+    command: ["bin/rails", "server", "-b", "0.0.0.0"]
+  database:
+    image: postgres:17.4
+    container_name: 'postgres'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  pgdata:
