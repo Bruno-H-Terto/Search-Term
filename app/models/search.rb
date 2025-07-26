@@ -2,7 +2,24 @@ class Search < ApplicationRecord
   belongs_to :user_ip, dependent: :destroy
   validates :term, presence: true
 
-  SIMILARITY_THRESHOLD = 0.7
+  after_commit :broadcast_search
+
+  private
+
+  def broadcast_search
+    broadcast_prepend_later_to(
+      user_ip_searches_key,
+      target: "searches",
+      partial: "searches/search",
+      locals: { search: self }
+    )
+  end
+
+  def user_ip_searches_key
+    "searches_user_#{user_ip_id}"
+  end
+
+  SIMILARITY_THRESHOLD = 0.5
 
   def self.find_similar(user_ip_id:, term:)
     sanitized_term = ActiveRecord::Base.sanitize_sql_like(term)

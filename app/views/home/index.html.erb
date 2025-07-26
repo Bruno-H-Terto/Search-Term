@@ -14,7 +14,11 @@
   <section>
     <div>
       <h2>Last search terms</h2>
-      <ul></ul>
+      <ul id="searches">
+        <%= render partial: "searches/search", collection: @searches %>
+      </ul>
+
+      <%= turbo_stream_from "searches_user_#{@user_ip.id}" %>
     </div>
   </section>
 </section>
