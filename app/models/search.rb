@@ -1,6 +1,7 @@
 class Search < ApplicationRecord
-  belongs_to :user_ip, dependent: :destroy
+  belongs_to :user_ip
   validates :term, presence: true
+  validates :term, uniqueness: { scope: :user_ip_id, case_sensitive: true }
 
   after_commit :broadcast_search
 

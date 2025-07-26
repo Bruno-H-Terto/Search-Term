@@ -52,4 +52,6 @@ group :development, :test do
   gem "rspec-rails"
   gem "rubocop-rails-omakase", require: false
   gem "simplecov", require: false
+  gem "shoulda-matchers"
+  gem "factory_bot_rails"
 end

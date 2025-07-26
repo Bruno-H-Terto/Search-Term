@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_26_203225) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_26_225529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_trgm"
@@ -32,5 +32,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_26_203225) do
     t.index ["ip_address"], name: "index_user_ips_on_ip_address", unique: true
   end
 
-  add_foreign_key "searches", "user_ips"
+  add_foreign_key "searches", "user_ips", on_delete: :cascade
 end
