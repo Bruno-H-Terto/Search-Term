@@ -28,6 +28,24 @@ describe 'User type a search', type: :system, js: true do
     expect(user.searches.count).to eq 1
   end
 
+  it 'and sends a similar term' do
+    user = UserIp.create!(ip_address: '127.0.0.1')
+    user.searches.create!(term: 'this')
+    user.searches.create!(term: 'other thing')
+
+    visit root_path
+    expect(page).to have_content 'this'
+    expect(page).to have_content 'other thing'
+
+    fill_in 'searchInput', with: 'this 2'
+
+    sleep 1
+    expect(page).to have_content('this 2')
+    expect(user.searches.first.term).to eq 'this 2'
+    expect(user.searches.last.term).to eq 'other thing'
+    expect(user.searches.count).to eq 2
+  end
+
   it 'and sends multiples terms' do
     user = UserIp.create!(ip_address: '127.0.0.1')
     user.searches.create!(term: 'rails')

@@ -5,7 +5,9 @@ class SearchesController < ApplicationController
     query = params[:query].to_s.strip
     return head :bad_request if query.blank?
 
-    user_ip = UserIp.find_or_create_by(ip_address: request.remote_ip)
+    user_ip = UserIp.find_by(ip_address: request.remote_ip)
+
+    return head :not_found unless user_ip
 
     similar_term = Search.find_similar(user_ip_id: user_ip.id, term: query)
     last_term = user_ip.searches.last
