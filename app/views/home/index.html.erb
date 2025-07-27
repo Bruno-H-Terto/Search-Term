@@ -1,23 +1,45 @@
-<section class="flex justify-center flex-col ps-3">
-  <h1>Serch Term</h1>
+<section class="m-5 flex flex-col items-center gap-8">
+  <header class="w-full bg-blue-950">
+    <nav class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-20 items-center justify-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-200">Search Term</h1>
+      </div>
+    </nav>
+  </header>
 
-  <div class="border-2 border-gray-600 mx-3" data-controller="search-input">
-    <input placeholder="Search something..."
-           id="searchInput"
-           type="text"
-           data-search-input-target="searchInput"
-           data-action="input->search-input#search"
+  <div class="w-full max-w-2xl mt-5">
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Search something..."
+      class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-950 transition duration-150 ease-in-out"
+      data-controller="search-input"
+      data-search-input-target="searchInput"
+      data-action="input->search-input#search"
     >
   </div>
 
-  <section>
-    <div>
-      <h2>Last search terms</h2>
-      <ul id="searches">
+  <section class="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Últimas buscas -->
+    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center">Last 10 search terms</h2>
+
+      <ul id="searches" class="list-disc list-inside space-y-2 text-gray-600">
         <%= render partial: "searches/search", collection: @searches %>
       </ul>
 
       <%= turbo_stream_from "searches_user_#{@user_ip.id}" %>
+    </div>
+
+    <!-- Mais buscadas -->
+    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center">Most Searched Terms</h2>
+
+      <ul class="list-disc list-inside space-y-2 text-gray-600">
+        <% @top_searches&.each do |term, count| %>
+          <li class="list-none"><%= term %> (<%= count %>)</li>
+        <% end %>
+      </ul>
     </div>
   </section>
 </section>

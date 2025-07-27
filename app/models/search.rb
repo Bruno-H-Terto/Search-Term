@@ -7,6 +7,10 @@ class Search < ApplicationRecord
 
   private
 
+  def self.top_terms(limit = 10)
+    group(:term).order("count_id DESC").limit(limit).count(:id)
+  end
+
   def broadcast_search
     broadcast_prepend_later_to(
       user_ip_searches_key,

@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+rm -rf tmp/pids
+
+# If running the rails server then create or migrate existing database
+if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  ./bin/rails db:prepare
+fi
+
+if ! gem list foreman -i --silent; then
+  echo "Installing foreman..."
+  gem install foreman
+fi
+rake tailwindcss:build
+
+exec "${@}"
