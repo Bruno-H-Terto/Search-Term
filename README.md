@@ -1,8 +1,8 @@
 # Search Terms
 
-This project was developed as part of the HelpJuice technical assessment.
+A lightweight search analytics app built with Ruby on Rails. It allows users to perform real-time searches while storing their queries for later analysis. Perfect for understanding search behavior in a simple and effective way.
 
-Link de deploy => [Search Term](https://search-term.onrender.com/)
+Link of deploy: [Search Term](https://search-term.onrender.com/)
 
 ## Features
 - Real-time search
