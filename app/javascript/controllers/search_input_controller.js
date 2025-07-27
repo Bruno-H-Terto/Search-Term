@@ -29,7 +29,7 @@ export default class extends Controller {
         this.lastQuery = newQuery;
         this.newTermSearch(newQuery);
       }
-    }, 2000);
+    }, 1000);
   }
 
   newTermSearch(query) {
