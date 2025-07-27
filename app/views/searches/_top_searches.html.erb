@@ -1,0 +1,5 @@
+<ul id="top_searches" class="list-disc list-inside space-y-2 text-gray-600">
+  <% top_searches&.each do |term, count| %>
+    <li class="list-none"><%= term %> (<%= count %>)</li>
+  <% end %>
+</ul>
