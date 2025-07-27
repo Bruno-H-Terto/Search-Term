@@ -14,7 +14,8 @@ services:
       - DB_PASSWORD=postgres
       - DB_USERNAME=postgres
       - REDIS_URL=redis://redis:6379/1
-    command: ["bin/rails", "server", "-b", "0.0.0.0"]
+    command: >
+      sh -c "rails db:prepare && bin/rails server -b 0.0.0.0"
   database:
     image: postgres:17.4
     container_name: 'postgres'

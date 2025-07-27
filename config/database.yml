@@ -6,7 +6,6 @@ default: &default
   username: <%= ENV["DB_USERNAME"] %>
   password: <%= ENV["DB_PASSWORD"] %>
 
-
 development:
   primary:
     <<: *default
@@ -15,14 +14,11 @@ development:
     <<: *default
     database: search_term_development
     migrations_paths: db/queue_migrate
-  cable:
-    <<: *default
-    database: storage/search_term_development_cable
-    migrations_paths: db/cable_migrate
-    
+
 test:
-  <<: *default
-  database: search_term_test
+  primary:
+    <<: *default
+    database: search_term_test
   queue:
     <<: *default
     database: search_term_test
@@ -36,7 +32,3 @@ production:
     <<: *primary_production
     database: search_term_production
     migrations_paths: db/queue_migrate
-  cable:
-    <<: *default
-    database: storage/search_term_production_cable
-    migrations_paths: db/cable_migrate

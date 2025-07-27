@@ -87,6 +87,11 @@ RSpec.configure do |config|
   include FactoryBot::Syntax::Methods
 
   config.include FactoryBot::Syntax::Methods
+
+  config.include ActiveJob::TestHelper
+  config.before(:each) do
+    ActiveJob::Base.queue_adapter = :test
+  end
 end
 
 Shoulda::Matchers.configure do |config|

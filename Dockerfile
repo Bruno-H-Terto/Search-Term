@@ -11,4 +11,3 @@ COPY Gemfile .
 COPY Gemfile.lock .
 
 RUN bundle update --bundler
-RUN bundle install

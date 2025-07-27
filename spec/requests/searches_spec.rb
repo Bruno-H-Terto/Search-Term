@@ -1,4 +1,3 @@
-# spec/requests/searches_spec.rb
 require 'rails_helper'
 
 RSpec.describe "Searches", type: :request do
@@ -24,9 +23,12 @@ RSpec.describe "Searches", type: :request do
       it "creates a new search term" do
         user_ip = create(:user_ip, ip_address: "127.0.0.1")
 
-        expect {
-          post searches_path, params: { query: "rails testing" }
-        }.to change { user_ip.searches.count }.by(1)
+        perform_enqueued_jobs do
+          expect {
+            post searches_path, params: { query: "rails testing" }
+          }.to change { user_ip.searches.count }.by(1)
+        end
+
         expect(response).to have_http_status(:ok)
       end
     end
@@ -34,11 +36,12 @@ RSpec.describe "Searches", type: :request do
     context "when query starts with last term" do
       it "updates the last term" do
         user_ip = create(:user_ip, ip_address: "127.0.0.1")
-
         user_ip.searches.create!(term: "rails")
         last_search = user_ip.searches.last
 
-        post searches_path, params: { query: "rails testing" }
+        perform_enqueued_jobs do
+          post searches_path, params: { query: "rails testing" }
+        end
 
         expect(response).to have_http_status(:ok)
         expect(last_search.reload.term).to eq("rails testing")
@@ -52,7 +55,9 @@ RSpec.describe "Searches", type: :request do
         allow(Search).to receive(:find_similar).and_return(user_ip.searches.last)
         similar_search = user_ip.searches.last
 
-        post searches_path, params: { query: "ruby on rails 7" }
+        perform_enqueued_jobs do
+          post searches_path, params: { query: "ruby on rails 7" }
+        end
 
         expect(response).to have_http_status(:ok)
         expect(similar_search.reload.term).to eq("ruby on rails 7")

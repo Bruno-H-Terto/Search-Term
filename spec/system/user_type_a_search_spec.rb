@@ -10,7 +10,9 @@ describe 'User type a search', type: :system, js: true do
     fill_in 'searchInput', with: 'rails'
 
     sleep 1
-    expect(page).to have_content('rails')
+    perform_enqueued_jobs do
+      expect(page).to have_content('rails')
+    end
   end
 
   it 'and sends a part of last term' do
@@ -23,9 +25,11 @@ describe 'User type a search', type: :system, js: true do
     fill_in 'searchInput', with: 'rails is'
 
     sleep 1
-    expect(page).to have_content('rails is')
-    expect(user.searches.last.term).to eq 'rails is'
-    expect(user.searches.count).to eq 1
+    perform_enqueued_jobs do
+      expect(page).to have_content('rails is')
+      expect(user.searches.last.term).to eq 'rails is'
+      expect(user.searches.count).to eq 1
+    end
   end
 
   it 'and sends a similar term' do
@@ -40,10 +44,12 @@ describe 'User type a search', type: :system, js: true do
     fill_in 'searchInput', with: 'this 2'
 
     sleep 1
-    expect(page).to have_content('this 2')
-    expect(user.searches.first.term).to eq 'this 2'
-    expect(user.searches.last.term).to eq 'other thing'
-    expect(user.searches.count).to eq 2
+    perform_enqueued_jobs do
+      expect(page).to have_content('this 2')
+      expect(user.searches.first.term).to eq 'this 2'
+      expect(user.searches.last.term).to eq 'other thing'
+      expect(user.searches.count).to eq 2
+    end
   end
 
   it 'and sends multiples terms' do
@@ -56,8 +62,10 @@ describe 'User type a search', type: :system, js: true do
     fill_in 'searchInput', with: 'new term'
 
     sleep 1
-    expect(page).to have_content('rails')
-    expect(page).to have_content('new term')
+    perform_enqueued_jobs do
+      expect(page).to have_content('rails')
+      expect(page).to have_content('new term')
+    end
   end
 
   it 'and can see only your terms' do
