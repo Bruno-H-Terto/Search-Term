@@ -50,6 +50,7 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path =~ /healthcheck/ } } }
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
@@ -73,6 +74,8 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "search_term_production"
 
   config.action_mailer.perform_caching = false
+
+  config.action_dispatch.trusted_proxies = [ IPAddr.new("0.0.0.0/0") ]
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

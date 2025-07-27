@@ -5,6 +5,7 @@ default: &default
   host: <%= ENV["DB_HOST"] %>
   username: <%= ENV["DB_USERNAME"] %>
   password: <%= ENV["DB_PASSWORD"] %>
+  port: <%= ENV["DB_PORT"] %>
 
 development:
   primary:
@@ -27,8 +28,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: search_term_production
+    database: search_term
   queue:
     <<: *primary_production
-    database: search_term_production
+    database: search_term
     migrations_paths: db/queue_migrate

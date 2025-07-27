@@ -1,0 +1,39 @@
+# Exported from Render on 2025-07-27T11:27:42Z
+services:
+- type: web
+  name: Search Term
+  runtime: docker
+  repo: https://github.com/Bruno-H-Terto/Search-Term
+  plan: free
+  envVars:
+  - key: DATABASE
+    sync: false
+  - key: DB_PORT
+    sync: false
+  - key: BUNDLE_PATH
+    sync: false
+  - key: BUNDLE_DEPLOYMENT
+    sync: false
+  - key: BUNDLE_WITHOUT
+    sync: false
+  - key: DB_HOST
+    sync: false
+  - key: DB_PASSWORD
+    sync: false
+  - key: DB_USERNAME
+    sync: false
+  - key: REDIS_URL
+    sync: false
+  - key: RENDER
+    sync: false
+  - key: RAILS_ENV
+    sync: false
+  - key: RAILS_MASTER_KEY
+    sync: false
+  - key: WEB_CONCURRENCY
+    sync: false
+  region: oregon
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  autoDeployTrigger: "off"
+version: "1"
