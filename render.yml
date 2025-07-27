@@ -1,0 +1,22 @@
+databases:
+  - name: search_term
+    databaseName: search_term
+    user: search_term
+    plan: free
+
+services:
+  - type: web
+    name: search_term
+    runtime: ruby
+    plan: free
+    buildCommand: './bin/render-build.sh'
+    startCommand: 'bundle exec rails server'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: search_term
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: WEB_CONCURRENCY
+        value: 2
